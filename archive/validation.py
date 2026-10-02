@@ -48,7 +48,15 @@ def validate_title(value):
 
     Returns (bool, str).
     """
-    raise NotImplementedError("validate_title")
+    if value.isalpha() and len(value) >= 3:
+        for i in range(len(value) - 2):
+             if value[i] == value[i+1] == value[i+2]:
+                 return False 
+            else:
+                return True
+    else:
+        return False
+
 
 
 def validate_city(value):
@@ -100,4 +108,5 @@ def validate_record(record):
 
     Do not re-write the rules here. Call the five functions above.
     """
+    
     raise NotImplementedError("validate_record")
