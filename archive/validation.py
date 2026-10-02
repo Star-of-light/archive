@@ -36,8 +36,14 @@ def validate_id(value):
 
     Returns (bool, str).
     """
-    h
-    raise NotImplementedError("validate_id")
+   if value.isdigit():
+         if len(value) == 5 :
+             if value.startswith("MS") :
+                 if value[2:].isdigit():
+                 return True
+            return False
+        return False
+    return False
 
 
 def validate_title(value):
