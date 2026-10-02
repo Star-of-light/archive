@@ -49,6 +49,8 @@ def validate_title(value):
     Returns (bool, str).
     """
     raise NotImplementedError("validate_title")
+    if type(value) == str :
+        
 
 
 def validate_city(value):
