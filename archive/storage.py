@@ -31,7 +31,19 @@ def parse_line(line):
 
     Returns dict.
     """
-    raise NotImplementedError("parse_line")
+  class MalformedRecordError(Exception):
+    pass
+
+def parse_csv_line_to_dict(line: str, field_names: list) -> dict:
+    stripped_line = line.strip()
+    fields = stripped_line.split(',')
+    if len(fields) != 5:
+        raise MalformedRecordError(
+            f"Expected exactly 5 fields, but found {len(fields)}. "
+            f"Line content: '{stripped_line}'"
+        )
+    return {field_names[i]: fields[i].strip() for i in range(5)}
+
 
 
 def load_archive(path):
@@ -60,4 +72,6 @@ def save_archive(path, records):
 
     Returns None.
     """
+
+
     raise NotImplementedError("save_archive")
