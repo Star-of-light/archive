@@ -77,7 +77,15 @@ def validate_year(value):
 
     Returns (bool, str).
     """
-    raise NotImplementedError("validate_year")
+ MIN_YEAR = 1100
+MAX_YEAR = 1900
+    if value is None or str(value).strip() == "":
+        return False
+    if value.isdigit():
+         if MIN_YEAR <= year <= MAX_YEAR:
+             return True
+        return False
+    return False
 
 
 def validate_condition(value):
