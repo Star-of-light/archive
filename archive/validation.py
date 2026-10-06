@@ -99,7 +99,15 @@ def validate_condition(value):
 
     Returns (bool, str).
     """
-    raise NotImplementedError("validate_condition")
+    if not value or value.strip() == "":
+        return (False, "Condition must be present and non-empty.")
+   if type(value) == str:
+        if value.lower() in VALID_CONDITIONS:
+            return (True, "")
+        else:
+            return (False, f"Condition '{value}' is not valid. Must be one of {VALID_CONDITIONS}.")
+    else:
+        return (False, "Condition must be a string.")
 
 
 def validate_record(record):
