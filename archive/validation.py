@@ -77,6 +77,11 @@ def validate_year(value):
 
     Returns (bool, str).
     """
+    if type(Value) == int:
+        if value >1100:
+            if value < 1900:
+                print(valid)
+
     raise NotImplementedError("validate_year")
 
 
