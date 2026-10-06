@@ -36,7 +36,6 @@ def validate_id(value):
 
     Returns (bool, str).
     """
-    h
     raise NotImplementedError("validate_id")
 
 
@@ -68,7 +67,11 @@ def validate_city(value):
 
     Returns (bool, str).
     """
-    raise NotImplementedError("validate_city")
+    If not value or not str(value).strip():
+        return (False, "City is missing or empty")
+    if str(value).strip().lower() not in [city.lower() for city in KNOWN_CITIES]:
+        return (False, f"City '{value}' is not in the list of known cities")
+    return (True, "")
 
 
 def validate_year(value):
