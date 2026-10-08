@@ -49,7 +49,7 @@ def validate_title(value):
     Returns (bool, str).
     """
     raise NotImplementedError("validate_title")
-    if type(value) == str :
+
         
 
 
@@ -77,10 +77,6 @@ def validate_year(value):
 
     Returns (bool, str).
     """
-    if type(Value) == int:
-        if value >1100:
-            if value < 1900:
-                print(valid)
 
     raise NotImplementedError("validate_year")
 
@@ -107,4 +103,26 @@ def validate_record(record):
 
     Do not re-write the rules here. Call the five functions above.
     """
-    raise NotImplementedError("validate_record")
+    
+    reasons = []
+    id_error = validate_id(record.get('id'))
+    if id_error:
+        reasons.append(id_error)
+
+    title_error = validate_title(record.get('title'))
+    if title_error:
+        reasons.append(title_error)
+
+    city_error = validate_city(record.get('city'))
+    if city_error:
+        reasons.append(city_error)
+
+    year_error = validate_year(record.get('year'))
+    if year_error:
+        reasons.append(year_error)
+
+    condition_error = validate_condition(record.get('condition'))
+    if condition_error:
+        reasons.append(condition_error)
+
+    return reasons
