@@ -1,0 +1,54 @@
+name: Autograde
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the full history
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0        # Part C needs every commit, not just the last
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pytest
+        run: pip install pytest
+
+      # ------------------------------------------------ Part A
+      - name: "Part A — provided tests (35 marks are graded on a larger hidden suite)"
+        run: pytest tests/test_provided.py -v --tb=short
+        continue-on-error: true
+
+      # ------------------------------------------------ Part B
+      - name: "Part B — your own tests must pass against your own code"
+        run: pytest tests/test_yours.py -v --tb=short
+        continue-on-error: true
+
+      - name: "Part B — you must actually have written tests"
+        run: |
+          COUNT=$(grep -c "^def test_" tests/test_yours.py || true)
+          echo "Tests found in tests/test_yours.py: $COUNT"
+          if [ "$COUNT" -lt 12 ]; then
+            echo "::warning::Only $COUNT tests. A thin suite catches few bugs and scores few marks."
+          fi
+        continue-on-error: true
+
+      # ------------------------------------------------ Part C
+      - name: "Part C — collaboration report"
+        run: python tools/check_collaboration.py
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### The Archive — CI summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Open the log above for the full report." >> $GITHUB_STEP_SUMMARY
+          echo "Remember: passing the provided tests is necessary, not sufficient." >> $GITHUB_STEP_SUMMARY
